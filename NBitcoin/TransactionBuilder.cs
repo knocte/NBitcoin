@@ -1601,16 +1601,20 @@ namespace NBitcoin
 				}
 			}
 
-			var scriptPubkey = coin.GetScriptCode();
+
 			var scriptSigSize = -1;
-			foreach(var extension in Extensions)
+			try
 			{
-				if(extension.CanEstimateScriptSigSize(scriptPubkey))
+				var scriptPubkey = coin.GetScriptCode();
+				foreach (var extension in Extensions)
 				{
-					scriptSigSize = extension.EstimateScriptSigSize(scriptPubkey);
-					break;
+					if (extension.CanEstimateScriptSigSize(scriptPubkey))
+					{
+						scriptSigSize = extension.EstimateScriptSigSize(scriptPubkey);
+						break;
+					}
 				}
-			}
+			} catch () { }
 
 			if(scriptSigSize == -1)
 				scriptSigSize += coin.TxOut.ScriptPubKey.Length; //Using heurestic to approximate size of unknown scriptPubKey
