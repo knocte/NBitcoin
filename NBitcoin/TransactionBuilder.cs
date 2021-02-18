@@ -695,7 +695,7 @@ namespace NBitcoin
 
 			public CoinOptions? GetOptions(ICoin coin)
 			{
-				Coins.TryGetValue(coin.Outpoint, out var coinWithOptions);
+				CoinsWithOptions.TryGetValue(coin.Outpoint, out var coinWithOptions);
 				return coinWithOptions?.Options;
 			}
 
